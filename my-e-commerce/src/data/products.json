@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "slug": "casque-audio",
+    "name": "Casque Audio",
+    "description": "Un casque confortable avec un son immersif.",
+    "price": 79.99,
+    "image": "/products/casque.jpeg"
+  },
+  {
+    "id": 2,
+    "slug": "clavier-mecanique",
+    "name": "Clavier mécanique",
+    "description": "Un clavier robuste pour travailler et jouer.",
+    "price": 119.99,
+    "image": "/products/clavier.jpeg"
+  }
+]
