@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { getProductBySlug } from "@/src/catalog/product.repository";
+import AddToCartButton from "@/src/cart/AddToCartButton";
 
 type PageProps = {
   params: Promise<{
@@ -31,9 +32,14 @@ export default async function ProductPage({ params }: PageProps) {
         <p className="text-slate-600 mt-4">{product.description}</p>
         <p className="text-2xl font-bold mt-6">{product.price} €</p>
 
-        <button className="mt-6 bg-slate-900 text-white px-6 py-3 rounded">
-          Ajouter au panier
-        </button>
+        <AddToCartButton
+          product={{
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            slug: product.slug,
+          }}
+        />
       </div>
     </section>
   );

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
+import { CartProvider } from "@/src/cart/cart.context";
+import CartSummary from "@/src/cart/CartSummary";
 
 const dancingScript = localFont({
   src: "./fonts/DancingScript-VariableFont_wght.ttf",
@@ -21,23 +23,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr" className={dancingScript.variable}>
-      <body>
-        <header className="bg-slate-900 text-white p-4">
-          <nav className="container mx-auto flex gap-6">
-            <Link href="/">Accueil</Link>
-            <Link href="/products">Produits</Link>
-            <Link href="/admin">Admin</Link>
-          </nav>
-        </header>
+<body>
+  <CartProvider>
+    <header className="bg-slate-900 text-white p-4">
+      <nav className="container mx-auto flex justify-between items-center gap-6">
+        <div className="flex gap-6">
+          <Link href="/">Accueil</Link>
+          <Link href="/products">Produits</Link>
+          <Link href="/admin">Admin</Link>
+        </div>
 
-        <main className="container mx-auto p-6 min-h-screen">
-          {children}
-        </main>
+        <CartSummary />
+      </nav>
+    </header>
 
-        <footer className="bg-slate-900 text-white p-4 text-center">
-          © 2026 My Supa Store
-        </footer>
-      </body>
+    <main className="container mx-auto p-6 min-h-screen">
+      {children}
+    </main>
+
+    <footer className="bg-slate-900 text-white p-4 text-center">
+      © 2026 My Supa Store
+    </footer>
+  </CartProvider>
+</body>
     </html>
   );
 }
