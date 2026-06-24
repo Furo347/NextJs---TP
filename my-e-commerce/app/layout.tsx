@@ -31,6 +31,7 @@ export default function RootLayout({
           <Link href="/">Accueil</Link>
           <Link href="/products">Produits</Link>
           <Link href="/admin">Admin</Link>
+          <Link href="/test-loading">Test loading</Link>
         </div>
 
         <CartSummary />
