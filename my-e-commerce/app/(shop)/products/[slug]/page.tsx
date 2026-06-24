@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { getProductBySlug } from "@/src/lib/products";
+import { getProductBySlug } from "@/src/catalog/product.repository";
 
 type PageProps = {
   params: Promise<{
@@ -10,8 +10,7 @@ type PageProps = {
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
-
-  const product = getProductBySlug(slug);
+  const product = await getProductBySlug(slug);
 
   if (!product) {
     notFound();
@@ -27,14 +26,12 @@ export default async function ProductPage({ params }: PageProps) {
         className="rounded-xl object-cover"
       />
 
-      <div>
+      <div className="bg-white text-slate-900 rounded-xl p-6">
         <h1 className="text-3xl font-bold">{product.name}</h1>
-
-        <p className="text-gray-600 mt-4">{product.description}</p>
-
+        <p className="text-slate-600 mt-4">{product.description}</p>
         <p className="text-2xl font-bold mt-6">{product.price} €</p>
 
-        <button className="mt-6 bg-black text-white px-6 py-3 rounded">
+        <button className="mt-6 bg-slate-900 text-white px-6 py-3 rounded">
           Ajouter au panier
         </button>
       </div>
