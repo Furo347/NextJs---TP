@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
 
+const dancingScript = localFont({
+  src: "./fonts/DancingScript-VariableFont_wght.ttf",
+  variable: "--font-dancing-script",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "My Supa Store",
-  description: "Mon premier e-commerce Next.js",
+  description: "Site e-commerce Next.js",
 };
 
 export default function RootLayout({
@@ -13,7 +20,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" className={dancingScript.variable}>
       <body>
         <header className="bg-slate-900 text-white p-4">
           <nav className="container mx-auto flex gap-6">
