@@ -68,8 +68,8 @@ export default async function ProductPage({ params }: PageProps) {
           </section>
         }
       >
-  <SponsoredProducts />
-</Suspense>
+        <SponsoredProducts />
+      </Suspense>
     </>
   );
 }
