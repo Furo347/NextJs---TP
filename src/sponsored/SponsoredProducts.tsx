@@ -2,9 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { getSponsoredProducts } from "@/src/sponsored/sponsored-products.repository";
 import RefreshSponsoredProductsButton from "@/src/sponsored/RefreshSponsoredProductsButton";
+import { wait } from "@/src/lib/wait";
 
 export default async function SponsoredProducts() {
   const products = await getSponsoredProducts();
+
+  await wait(1500);
 
   if (products.length === 0) {
     return null;

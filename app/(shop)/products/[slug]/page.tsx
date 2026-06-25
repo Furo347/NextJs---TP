@@ -4,9 +4,6 @@ import { getProductBySlug, getProducts } from "@/src/catalog/product.repository"
 import AddToCartButton from "@/src/cart/AddToCartButton";
 import ProductTabs from "@/src/catalog/ProductTabs";
 import { Suspense } from "react";
-import SimilarProducts from "@/src/catalog/SimilarProducts";
-import SimilarProductsSkeleton from "@/src/catalog/SimilarProductsSkeleton";
-import SponsoredProducts from "@/src/sponsored/SponsoredProducts";
 
 type PageProps = {
   params: Promise<{
@@ -56,14 +53,6 @@ export default async function ProductPage({ params }: PageProps) {
           </Suspense>
         </div>
       </section>
-
-      <Suspense fallback={<SimilarProductsSkeleton />}>
-        <SimilarProducts currentProductId={product.id} />
-      </Suspense>
-
-      <Suspense fallback={<p className="mt-8">Chargement des produits sponsorisés...</p>}>
-        <SponsoredProducts />
-      </Suspense>
     </>
   );
 }

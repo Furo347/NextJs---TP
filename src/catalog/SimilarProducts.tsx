@@ -1,18 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getSimilarProducts } from "@/src/catalog/product.repository";
+import { getSimilarProducts,getProductBySlug } from "@/src/catalog/product.repository";
 import { wait } from "@/src/lib/wait";
 
 type SimilarProductsProps = {
-  currentProductId: number;
+  currentProductSlug: string;
 };
 
 export default async function SimilarProducts({
-  currentProductId,
+  currentProductSlug,
 }: SimilarProductsProps) {
   await wait(2500);
 
-  const products = await getSimilarProducts(currentProductId);
+  const currentProduct = await getProductBySlug(currentProductSlug);
+
+  if (!currentProduct) {
+    return null;
+  }
+
+  const products = await getSimilarProducts(currentProduct.id);
 
   if (products.length === 0) {
     return null;
