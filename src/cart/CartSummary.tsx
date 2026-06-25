@@ -1,9 +1,7 @@
-"use client";
+import { getCartSummary } from "@/src/cart/cart.repository";
 
-import { useCart } from "./cart.context";
-
-export default function CartSummary() {
-  const { totalItems, totalPrice } = useCart();
+export default async function CartSummary() {
+  const { totalItems, totalPrice } = await getCartSummary();
 
   return (
     <div className="text-sm">

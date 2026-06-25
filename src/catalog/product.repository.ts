@@ -15,3 +15,17 @@ export async function getProductBySlug(slug: string) {
     },
   });
 }
+
+export async function getSimilarProducts(currentProductId: number) {
+  return prisma.product.findMany({
+    where: {
+      id: {
+        not: currentProductId,
+      },
+    },
+    take: 3,
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+}

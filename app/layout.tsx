@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
-import { CartProvider } from "@/src/cart/cart.context";
 import CartSummary from "@/src/cart/CartSummary";
 
 const dancingScript = localFont({
@@ -24,7 +23,6 @@ export default function RootLayout({
   return (
     <html lang="fr" className={dancingScript.variable}>
 <body>
-  <CartProvider>
     <header className="bg-slate-900 text-white p-4">
       <nav className="container mx-auto flex justify-between items-center gap-6">
         <div className="flex gap-6">
@@ -47,7 +45,6 @@ export default function RootLayout({
     <footer className="bg-slate-900 text-white p-4 text-center">
       © 2026 My Supa Store
     </footer>
-  </CartProvider>
 </body>
     </html>
   );
