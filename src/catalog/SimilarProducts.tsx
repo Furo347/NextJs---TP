@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getSimilarProducts } from "@/src/catalog/product.repository";
+import { wait } from "@/src/lib/wait";
 
 type SimilarProductsProps = {
   currentProductId: number;
@@ -9,6 +10,8 @@ type SimilarProductsProps = {
 export default async function SimilarProducts({
   currentProductId,
 }: SimilarProductsProps) {
+  await wait(2500);
+
   const products = await getSimilarProducts(currentProductId);
 
   if (products.length === 0) {

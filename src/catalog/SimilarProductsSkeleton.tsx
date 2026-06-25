@@ -1,0 +1,17 @@
+export default function SimilarProductsSkeleton() {
+  return (
+    <section className="mt-10 bg-white text-slate-900 rounded-xl p-6">
+      <h2 className="text-2xl font-bold mb-6">Produits similaires</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[1, 2, 3].map((item) => (
+          <div key={item} className="border rounded-xl p-4 animate-pulse">
+            <div className="h-40 bg-slate-200 rounded-lg" />
+            <div className="h-5 bg-slate-200 rounded mt-4 w-2/3" />
+            <div className="h-5 bg-slate-200 rounded mt-3 w-1/3" />
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}

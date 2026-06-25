@@ -5,6 +5,7 @@ import AddToCartButton from "@/src/cart/AddToCartButton";
 import ProductTabs from "@/src/catalog/ProductTabs";
 import { Suspense } from "react";
 import SimilarProducts from "@/src/catalog/SimilarProducts";
+import SimilarProductsSkeleton from "@/src/catalog/SimilarProductsSkeleton";
 
 type PageProps = {
   params: Promise<{
@@ -55,7 +56,9 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </section>
 
-      <SimilarProducts currentProductId={product.id} />
+      <Suspense fallback={<SimilarProductsSkeleton />}>
+        <SimilarProducts currentProductId={product.id} />
+      </Suspense>
     </>
   );
 }
