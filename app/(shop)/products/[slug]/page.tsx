@@ -11,16 +11,15 @@ type PageProps = {
   }>;
 };
 
-export async function generateStaticParams() {
+/* export async function generateStaticParams() {
   const products = await getProducts();
 
   return products.map((product) => ({
     slug: product.slug,
   }));
-}
+} */
 
-export const revalidate = 60;
-export const dynamicParams = false;
+export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
