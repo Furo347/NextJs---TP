@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import Link from "next/link";
 import "./globals.css";
 import CartSummary from "@/src/cart/CartSummary";
+import Footer from "@/src/components/Footer";
+import { Suspense } from "react";
 
 const dancingScript = localFont({
   src: "./fonts/DancingScript-VariableFont_wght.ttf",
@@ -34,7 +36,9 @@ export default function RootLayout({
           <Link href="/products/casque-audio2">Not found</Link>
         </div>
 
-        <CartSummary />
+        <Suspense fallback={<div className="text-sm">Panier : ...</div>}>
+          <CartSummary />
+        </Suspense>
       </nav>
     </header>
 
@@ -42,9 +46,7 @@ export default function RootLayout({
       {children}
     </main>
 
-    <footer className="bg-slate-900 text-white p-4 text-center">
-      © 2026 My Supa Store
-    </footer>
+    <Footer />
 </body>
     </html>
   );

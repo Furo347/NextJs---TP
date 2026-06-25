@@ -1,6 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getSimilarProducts,getProductBySlug } from "@/src/catalog/product.repository";
+import { connection } from "next/server";
+import {
+  getProductBySlug,
+  getSimilarProducts,
+} from "@/src/catalog/product.repository";
 import { wait } from "@/src/lib/wait";
 
 type SimilarProductsProps = {
@@ -10,6 +14,8 @@ type SimilarProductsProps = {
 export default async function SimilarProducts({
   currentProductSlug,
 }: SimilarProductsProps) {
+  await connection();
+
   await wait(2500);
 
   const currentProduct = await getProductBySlug(currentProductSlug);

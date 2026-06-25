@@ -1,6 +1,9 @@
+import { connection } from "next/server";
 import { getCartSummary } from "@/src/cart/cart.repository";
 
 export default async function CartSummary() {
+  await connection();
+
   const { totalItems, totalPrice } = await getCartSummary();
 
   return (

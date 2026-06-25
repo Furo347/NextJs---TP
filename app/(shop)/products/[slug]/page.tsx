@@ -4,6 +4,9 @@ import { getProductBySlug, getProducts } from "@/src/catalog/product.repository"
 import AddToCartButton from "@/src/cart/AddToCartButton";
 import ProductTabs from "@/src/catalog/ProductTabs";
 import { Suspense } from "react";
+import SimilarProducts from "@/src/catalog/SimilarProducts";
+import SimilarProductsSkeleton from "@/src/catalog/SimilarProductsSkeleton";
+import SponsoredProducts from "@/src/sponsored/SponsoredProducts";
 
 type PageProps = {
   params: Promise<{
@@ -11,15 +14,15 @@ type PageProps = {
   }>;
 };
 
-/* export async function generateStaticParams() {
+export async function generateStaticParams() {
   const products = await getProducts();
 
   return products.map((product) => ({
     slug: product.slug,
   }));
-} */
+}
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
@@ -53,6 +56,20 @@ export default async function ProductPage({ params }: PageProps) {
           </Suspense>
         </div>
       </section>
+
+      <Suspense fallback={<SimilarProductsSkeleton />}>
+        <SimilarProducts currentProductSlug={product.slug} />
+      </Suspense>
+
+      <Suspense
+        fallback={
+          <section className="mt-10 bg-white text-slate-900 rounded-xl p-6">
+            Chargement des produits sponsorisés...
+          </section>
+        }
+      >
+  <SponsoredProducts />
+</Suspense>
     </>
   );
 }
