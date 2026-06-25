@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getSponsoredProducts } from "@/src/sponsored/sponsored-products.repository";
+import RefreshSponsoredProductsButton from "@/src/sponsored/RefreshSponsoredProductsButton";
 
 export default async function SponsoredProducts() {
   const products = await getSponsoredProducts();
@@ -11,13 +12,19 @@ export default async function SponsoredProducts() {
 
   return (
     <section className="mt-10 bg-white text-slate-900 rounded-xl p-6">
-      <p className="text-sm uppercase tracking-wide text-slate-500">
-        Sponsorisés
-      </p>
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <p className="text-sm uppercase tracking-wide text-slate-500">
+            Sponsorisés
+          </p>
 
-      <h2 className="text-2xl font-bold mb-6">
-        Produits sponsorisés
-      </h2>
+          <h2 className="text-2xl font-bold">
+            Produits sponsorisés
+          </h2>
+        </div>
+
+        <RefreshSponsoredProductsButton />
+      </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {products.map((product) => (

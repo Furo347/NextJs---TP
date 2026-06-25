@@ -33,6 +33,9 @@ async function graphqlRequest<T>(
   query: string,
   variables?: Record<string, unknown>
 ): Promise<T> {
+  
+  const start = performance.now();
+
   const response = await fetch(GRAPHQL_ENDPOINT, {
     method: "POST",
     headers: {
@@ -40,8 +43,16 @@ async function graphqlRequest<T>(
       Accept: "application/json",
     },
     body: JSON.stringify({ query, variables }),
-    next: { revalidate: 60 },
+    cache: "force-cache",
+    next: {
+      revalidate: 60,
+      tags: ["sponsored-products"],
+    },
   });
+
+  console.log(
+    `[mockShop] fetch products ${(performance.now() - start).toFixed(0)}ms`
+  );
 
   const text = await response.text();
 
