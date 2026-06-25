@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { getProducts } from "@/src/catalog/product.repository";
+import { Suspense } from "react";
+import SponsoredProducts from "@/src/sponsored/SponsoredProducts";
 
 export default async function ProductsPage() {
   const products = await getProducts();
@@ -32,6 +34,10 @@ export default async function ProductsPage() {
             </Link>
           </article>
         ))}
+
+        <Suspense fallback={<p className="mt-8">Chargement des produits sponsorisés...</p>}>
+          <SponsoredProducts />
+        </Suspense>
       </div>
     </section>
   );
