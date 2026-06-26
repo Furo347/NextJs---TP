@@ -30,6 +30,7 @@ export default async function AdminProductsPage() {
               <th className="text-left p-3">Slug</th>
               <th className="text-left p-3">Prix</th>
               <th className="text-left p-3">Image</th>
+              <th className="text-left p-3">Actions</th>
             </tr>
           </thead>
 
@@ -40,6 +41,14 @@ export default async function AdminProductsPage() {
                 <td className="p-3">{product.slug}</td>
                 <td className="p-3">{product.price} €</td>
                 <td className="p-3">{product.image}</td>
+                <td className="p-3">
+                  <Link
+                    href={`/admin/products/${product.id}/edit`}
+                    className="underline"
+                  >
+                    Modifier
+                  </Link>
+                </td>
               </tr>
             ))}
           </tbody>
