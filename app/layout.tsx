@@ -35,6 +35,7 @@ export default function RootLayout({
           <Link href="/test-error">Test error</Link>
           <Link href="/products/casque-audio2">Not found</Link>
           <Link href="/register">Inscription</Link>
+          <Link href="/login">Connexion</Link>
         </div>
 
         <Suspense fallback={<div className="text-sm">Panier : ...</div>}>
