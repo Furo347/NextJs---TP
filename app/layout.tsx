@@ -6,7 +6,7 @@ import CartSummary from "@/src/cart/CartSummary";
 import Footer from "@/src/components/Footer";
 import { Suspense } from "react";
 import HeaderUser from "@/src/auth/HeaderUser";
-import { auth } from "@/auth";
+import AdminNavLink from "@/src/auth/AdminNavLink";
 
 const dancingScript = localFont({
   src: "./fonts/DancingScript-VariableFont_wght.ttf",
@@ -24,8 +24,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await auth();
-  const isAdmin = session?.user?.role === "ADMIN";
 
   return (
     <html lang="fr" className={dancingScript.variable}>
@@ -35,7 +33,9 @@ export default async function RootLayout({
               <div className="flex gap-6">
                 <Link href="/">Accueil</Link>
                 <Link href="/products">Produits</Link>
-                {isAdmin && <Link href="/admin">Admin</Link>}
+                <Suspense fallback={null}>
+                  <AdminNavLink />
+                </Suspense>
                 <Link href="/test-loading">Test loading</Link>
                 <Link href="/test-error">Test error</Link>
                 <Link href="/products/casque-audio2">Not found</Link>
@@ -47,7 +47,9 @@ export default async function RootLayout({
                 <CartSummary />
               </Suspense>
               
-              <HeaderUser />
+              <Suspense fallback={<Link href="/login" className="text-sm underline">Connexion</Link>}>
+                <HeaderUser />
+              </Suspense>
 
             </nav>
           </header>

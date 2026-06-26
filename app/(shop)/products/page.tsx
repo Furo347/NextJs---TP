@@ -1,16 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { getProducts } from "@/src/catalog/product.repository";
 import { Suspense } from "react";
 import SponsoredProducts from "@/src/sponsored/SponsoredProducts";
 import { getPrimesWithoutCache,getPrimesWithCache,} from "@/src/lib/primes";
+import { getCachedProducts } from "@/src/catalog/product.repository";
 
 
 export default async function ProductsPage() {
-  const products = await getProducts();
+  const products = await getCachedProducts();
 
-   const primesWithoutCache = await getPrimesWithoutCache(2_000_000);
-    const primesWithCache = await getPrimesWithCache(2_000_000);
+  const primesWithoutCache = await getPrimesWithoutCache(2_000_000);
+  const primesWithCache = await getPrimesWithCache(2_000_000);
 
   return (
     <>

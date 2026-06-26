@@ -1,4 +1,5 @@
 import { prisma } from "@/src/lib/prisma";
+import { unstable_cache } from "next/cache";
 
 export async function getProducts() {
   return prisma.product.findMany({
@@ -29,3 +30,16 @@ export async function getSimilarProducts(currentProductId: number) {
     },
   });
 }
+
+export const getCachedProducts = unstable_cache(
+  async () => {
+    console.log("[products] fetch from database");
+
+    return getProducts();
+  },
+  ["products"],
+  {
+    tags: ["products"],
+    revalidate: 60,
+  }
+);

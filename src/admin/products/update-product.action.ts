@@ -1,9 +1,9 @@
 "use server";
 
 import { z } from "zod";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/src/lib/prisma";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 const updateProductSchema = z.object({
   id: z.coerce.number().int().positive(),
@@ -51,6 +51,8 @@ export async function updateProductAction(
       image: result.data.image,
     },
   });
+
+  revalidateTag("products","max");
 
   revalidatePath("/admin/products");
   revalidatePath("/products");
