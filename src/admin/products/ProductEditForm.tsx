@@ -64,13 +64,27 @@ export default function ProductEditForm({ product }: Props) {
 
       {state.error && <p className="text-red-600 text-sm">{state.error}</p>}
 
-      <button
-        type="submit"
-        disabled={isPending}
-        className="bg-slate-900 text-white px-4 py-2 rounded disabled:opacity-50"
-      >
-        {isPending ? "Enregistrement..." : "Enregistrer"}
-      </button>
+      <div className="flex gap-3">
+        <button
+          type="submit"
+          name="intent"
+          value="save"
+          disabled={isPending}
+          className="bg-slate-900 text-white px-4 py-2 rounded disabled:opacity-50"
+        >
+          {isPending ? "Enregistrement..." : "Enregistrer"}
+        </button>
+
+        <button
+          type="submit"
+          name="intent"
+          value="test-error"
+          disabled={isPending}
+          className="bg-red-600 text-white px-4 py-2 rounded disabled:opacity-50"
+        >
+          Tester une erreur
+        </button>
+      </div>
     </form>
   );
 }

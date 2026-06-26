@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { notFound } from "next/navigation";
-import { prisma } from "@/src/lib/prisma";
-import ProductEditForm from "@/src/admin/products/ProductEditForm";
+import { Suspense } from "react";
+import EditProductContent from "@/app/(admin)/admin/products/EditProductContent";
 
 type PageProps = {
   params: Promise<{
@@ -9,32 +7,16 @@ type PageProps = {
   }>;
 };
 
-export default async function EditProductPage({ params }: PageProps) {
-  const { id } = await params;
-
-  const product = await prisma.product.findUnique({
-    where: {
-      id: Number(id),
-    },
-  });
-
-  if (!product) {
-    notFound();
-  }
-
+export default function EditProductPage({ params }: PageProps) {
   return (
-    <section>
-      <div className="mb-6">
-        <Link href="/admin/products" className="underline">
-          ← Retour aux produits
-        </Link>
-      </div>
-
-      <h1 className="text-3xl font-bold mb-6">
-        Modifier le produit
-      </h1>
-
-      <ProductEditForm product={product} />
-    </section>
+    <Suspense
+      fallback={
+        <section className="bg-white text-slate-900 rounded-xl p-6">
+          Chargement du produit...
+        </section>
+      }
+    >
+      <EditProductContent params={params} />
+    </Suspense>
   );
 }
