@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { SponsoredProduct } from "@/src/sponsored/sponsored-products.repository";
 import { getAbVariant } from "@/src/ab/ab-cookie";
+import PrefetchLink from "@/src/components/PrefetchLink";
 
 type Props = {
   product: SponsoredProduct;
@@ -9,12 +9,12 @@ type Props = {
 
 export default async function SponsoredProductCard({ product }: Props) {
   const variant = await getAbVariant();
-  const shouldDisablePrefetch = variant === "B";
+  const prefetchOnHover = variant === "B";
 
   return (
-    <Link
+    <PrefetchLink
       href={`/sponsored-products/${product.handle}`}
-      prefetch={shouldDisablePrefetch ? false : undefined}
+      prefetchOnHover={prefetchOnHover}
       className="border rounded-xl p-4 hover:shadow"
     >
       <Image
@@ -34,6 +34,6 @@ export default async function SponsoredProductCard({ product }: Props) {
       <p className="font-bold mt-2">
         {product.price} {product.currencyCode}
       </p>
-    </Link>
+    </PrefetchLink>
   );
 }

@@ -1,7 +1,7 @@
 import Image from "next/image";
-import Link from "next/link";
 import { Product } from "@prisma/client";
 import { getAbVariant } from "@/src/ab/ab-cookie";
+import PrefetchLink from "@/src/components/PrefetchLink";
 
 type ProductCardProps = {
   product: Product;
@@ -9,12 +9,12 @@ type ProductCardProps = {
 
 export default async function ProductCard({ product }: ProductCardProps) {
   const variant = await getAbVariant();
-  const shouldDisablePrefetch = variant === "B";
+  const prefetchOnHover = variant === "B";
 
   return (
-    <Link
+    <PrefetchLink
       href={`/products/${product.slug}`}
-      prefetch={shouldDisablePrefetch ? false : undefined}
+      prefetchOnHover={prefetchOnHover}
       className="border rounded-xl p-4 hover:shadow"
     >
       <Image
@@ -27,6 +27,6 @@ export default async function ProductCard({ product }: ProductCardProps) {
 
       <h3 className="text-lg font-semibold mt-3">{product.name}</h3>
       <p className="font-bold mt-2">{product.price} €</p>
-    </Link>
+    </PrefetchLink>
   );
 }
