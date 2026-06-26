@@ -1,18 +1,57 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
 
-export default auth((req) => {
-  const session = req.auth;
+const AB_COOKIE_NAME = "ab_variant";
 
-  const isAdmin = session?.user?.role === "ADMIN";
-
-  if (!isAdmin) {
-    return NextResponse.redirect(new URL("/", req.url));
+function getValidVariant(value: string | null | undefined) {
+  if (value === "A" || value === "B") {
+    return value;
   }
 
-  return NextResponse.next();
+  return null;
+}
+
+export default auth((req) => {
+  const url = req.nextUrl;
+
+  const forcedVariant = getValidVariant(url.searchParams.get("ab_prefetch"));
+  const existingVariant = getValidVariant(req.cookies.get(AB_COOKIE_NAME)?.value);
+
+  const variant =
+    forcedVariant ?? existingVariant ?? (Math.random() < 0.5 ? "A" : "B");
+
+  const isAdminRoute = url.pathname.startsWith("/admin");
+  const isAdmin = req.auth?.user?.role === "ADMIN";
+
+  if (isAdminRoute && !isAdmin) {
+    const response = NextResponse.redirect(new URL("/", req.url));
+
+    response.cookies.set(AB_COOKIE_NAME, variant, {
+      path: "/",
+      httpOnly: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+
+    return response;
+  }
+
+  const response = NextResponse.next();
+
+  if (!existingVariant || forcedVariant) {
+    response.cookies.set(AB_COOKIE_NAME, variant, {
+      path: "/",
+      httpOnly: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+  }
+
+  return response;
 });
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
+  ],
 };
