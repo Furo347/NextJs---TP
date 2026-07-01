@@ -16,8 +16,23 @@ const dancingScript = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "My Supa Store",
-  description: "Site e-commerce Next.js",
+  title: {
+    default: "My Supa Store",
+    template: "%s | My Supa Store",
+  },
+  description: "Une boutique e-commerce construite avec Next.js.",
+  keywords: ["e-commerce", "Next.js", "produits", "boutique"],
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "My Supa Store",
+    description: "Une boutique e-commerce construite avec Next.js.",
+    type: "website",
+    locale: "fr_FR",
+    siteName: "My Supa Store",
+  },
 };
 
 export default async function RootLayout({

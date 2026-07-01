@@ -7,8 +7,15 @@ import { Suspense } from "react";
 import SimilarProducts from "@/src/catalog/SimilarProducts";
 import SimilarProductsSkeleton from "@/src/catalog/SimilarProductsSkeleton";
 import SponsoredProducts from "@/src/sponsored/SponsoredProducts";
+import type { Metadata } from "next";
 
 type PageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
+
+type MetadataProps = {
   params: Promise<{
     slug: string;
   }>;
@@ -23,6 +30,54 @@ export async function generateStaticParams() {
 }
 
 //export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: MetadataProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const product = await getProductBySlug(slug);
+
+  if (!product) {
+    return {
+      title: "Produit introuvable",
+      description: "Ce produit n'existe pas.",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  return {
+    title: product.name,
+    description: product.description,
+    keywords: [
+      product.name,
+      product.slug,
+      "e-commerce",
+      "produit",
+      "boutique",
+    ],
+    robots: {
+      index: true,
+      follow: true,
+    },
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      type: "website",
+      images: [
+        {
+          url: product.image,
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
+    },
+  };
+}
 
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params;
