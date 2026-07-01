@@ -41,6 +41,7 @@ export default async function ProductPage({ params }: PageProps) {
           alt={product.name}
           width={600}
           height={500}
+          priority
           className="rounded-xl object-cover"
         />
 

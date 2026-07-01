@@ -7,6 +7,7 @@ import Footer from "@/src/components/Footer";
 import { Suspense } from "react";
 import HeaderUser from "@/src/auth/HeaderUser";
 import AdminNavLink from "@/src/auth/AdminNavLink";
+import WebVitalsReporter from "@/src/observability/WebVitalsReporter";
 
 const dancingScript = localFont({
   src: "./fonts/DancingScript-VariableFont_wght.ttf",
@@ -28,6 +29,7 @@ export default async function RootLayout({
   return (
     <html lang="fr" className={dancingScript.variable}>
       <body>
+        <WebVitalsReporter />
           <header className="bg-slate-900 text-white p-4">
             <nav className="container mx-auto flex justify-between items-center gap-6">
               <div className="flex gap-6">
