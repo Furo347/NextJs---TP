@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import SponsoredProducts from "@/src/sponsored/SponsoredProducts";
 import { getPrimesWithoutCache,getPrimesWithCache,} from "@/src/lib/primes";
 import { getCachedProducts } from "@/src/catalog/product.repository";
+import PublicEnvDemo from "@/src/env/PublicEnvDemo";
 
 
 export default async function ProductsPage() {
@@ -47,23 +48,26 @@ export default async function ProductsPage() {
         </div>
       </section>
 
-            <section className="mt-8 rounded-xl bg-white text-slate-900 p-6">
-          <h2 className="text-xl font-bold mb-4">
-            Démonstration unstable_cache
-          </h2>
+      <PublicEnvDemo />
+      <p>{process.env.SERVER_SECRET_MESSAGE}</p>
 
-          <p>
-            Sans cache : {primesWithoutCache.count} nombres premiers
-          </p>
+      <section className="mt-8 rounded-xl bg-white text-slate-900 p-6">
+        <h2 className="text-xl font-bold mb-4">
+          Démonstration unstable_cache
+        </h2>
 
-          <p>
-            Avec cache : {primesWithCache.count} nombres premiers
-          </p>
+        <p>
+          Sans cache : {primesWithoutCache.count} nombres premiers
+        </p>
 
-          <p className="text-sm text-slate-500 mt-3">
-            Somme : {primesWithCache.sum}
-          </p>
-        </section>
+        <p>
+          Avec cache : {primesWithCache.count} nombres premiers
+        </p>
+
+        <p className="text-sm text-slate-500 mt-3">
+          Somme : {primesWithCache.sum}
+        </p>
+      </section>
     </>
   );
 }
