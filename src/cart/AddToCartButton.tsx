@@ -14,6 +14,7 @@ export default function AddToCartButton({ product }: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   async function handleAddToCart() {
+    debugger;
     setIsLoading(true);
 
     try {
