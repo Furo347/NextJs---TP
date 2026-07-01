@@ -1,13 +1,14 @@
 import Link from "next/link";
 import { auth } from "@/auth";
+import { getDictionary } from "@/src/i18n/get-dictionary";
 
 export default async function AdminNavLink() {
   const session = await auth();
-  const isAdmin = session?.user?.role === "ADMIN";
+  const dict = await getDictionary();
 
-  if (!isAdmin) {
+  if (session?.user?.role !== "ADMIN") {
     return null;
   }
 
-  return <Link href="/admin">Admin</Link>;
+  return <Link href="/admin">{dict.nav.admin}</Link>;
 }

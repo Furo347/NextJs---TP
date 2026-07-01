@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "admin": "Admin",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "footer": {
+    "copyright": "My super store"
+  }
+}

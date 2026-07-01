@@ -9,6 +9,8 @@ import HeaderUser from "@/src/auth/HeaderUser";
 import AdminNavLink from "@/src/auth/AdminNavLink";
 import WebVitalsReporter from "@/src/observability/WebVitalsReporter";
 import ServiceWorkerRegister from "@/src/pwa/ServiceWorkerRegister";
+import LanguageSwitcher from "@/src/i18n/LanguageSwitcher";
+import TranslatedNavLinks from "@/src/i18n/TranslatedNavLinks";
 
 const dancingScript = localFont({
   src: "./fonts/DancingScript-VariableFont_wght.ttf",
@@ -53,6 +55,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
+
   return (
     <html lang="fr" className={dancingScript.variable}>
       <body>
@@ -61,16 +64,16 @@ export default async function RootLayout({
           <header className="bg-slate-900 text-white p-4">
             <nav className="container mx-auto flex justify-between items-center gap-6">
               <div className="flex gap-6">
-                <Link href="/">Accueil</Link>
-                <Link href="/products">Produits</Link>
+                <Suspense fallback={<span>...</span>}>
+                  <TranslatedNavLinks />
+                </Suspense>
+
                 <Suspense fallback={null}>
                   <AdminNavLink />
                 </Suspense>
                 <Link href="/test-loading">Test loading</Link>
                 <Link href="/test-error">Test error</Link>
                 <Link href="/products/casque-audio2">Not found</Link>
-                <Link href="/register">Inscription</Link>
-                <Link href="/login">Connexion</Link>
               </div>
 
               <Suspense fallback={<div className="text-sm">Panier : ...</div>}>
@@ -81,6 +84,8 @@ export default async function RootLayout({
                 <HeaderUser />
               </Suspense>
 
+              <LanguageSwitcher />
+
             </nav>
           </header>
 
@@ -88,7 +93,9 @@ export default async function RootLayout({
             {children}
           </main>
 
-          <Footer />
+          <Suspense fallback={<footer className="bg-slate-900 text-white p-4 text-center">© 2026</footer>}>
+            <Footer />
+          </Suspense>
       </body>
     </html>
   );

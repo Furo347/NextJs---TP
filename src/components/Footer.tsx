@@ -1,11 +1,11 @@
-export default async function Footer() {
-  "use cache";
+import { getDictionary } from "@/src/i18n/get-dictionary";
 
-  const currentYear = new Date().getFullYear();
+export default async function Footer() {
+  const dict = await getDictionary();
 
   return (
     <footer className="bg-slate-900 text-white p-4 text-center">
-      © {currentYear} My Supa Store
+      © 2026 {dict.footer.copyright}
     </footer>
   );
 }

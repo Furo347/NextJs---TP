@@ -3,6 +3,8 @@ import { auth } from "@/auth";
 
 const AB_COOKIE_NAME = "ab_variant";
 
+const LOCALE_COOKIE_NAME = "NEXT_LOCALE";
+
 function getValidVariant(value: string | null | undefined) {
   if (value === "A" || value === "B") {
     return value;
@@ -38,6 +40,21 @@ export default auth((req) => {
 
   const response = NextResponse.next();
 
+  const existingLocale = req.cookies.get(LOCALE_COOKIE_NAME)?.value;
+
+  if (!existingLocale) {
+    const preferredLocale = getPreferredLocale(
+      req.headers.get("accept-language")
+  );
+
+  response.cookies.set(LOCALE_COOKIE_NAME, preferredLocale, {
+    path: "/",
+    httpOnly: false,
+    sameSite: "lax",
+    maxAge: 60 * 60 * 24 * 365,
+  });
+}
+
   if (!existingVariant || forcedVariant) {
     response.cookies.set(AB_COOKIE_NAME, variant, {
       path: "/",
@@ -55,3 +72,11 @@ export const config = {
     "/((?!api|_next/static|_next/image|favicon.ico|.*\\..*).*)",
   ],
 };
+
+function getPreferredLocale(acceptLanguage: string | null) {
+  if (!acceptLanguage) {
+    return "fr";
+  }
+
+  return acceptLanguage.toLowerCase().startsWith("en") ? "en" : "fr";
+}
