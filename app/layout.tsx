@@ -8,6 +8,7 @@ import { Suspense } from "react";
 import HeaderUser from "@/src/auth/HeaderUser";
 import AdminNavLink from "@/src/auth/AdminNavLink";
 import WebVitalsReporter from "@/src/observability/WebVitalsReporter";
+import ServiceWorkerRegister from "@/src/pwa/ServiceWorkerRegister";
 
 const dancingScript = localFont({
   src: "./fonts/DancingScript-VariableFont_wght.ttf",
@@ -33,6 +34,17 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     siteName: "My Supa Store",
   },
+  manifest: "/manifest.json",
+  themeColor: "#0f172a",
+  appleWebApp: {
+    capable: true,
+    title: "My Supa Store",
+    statusBarStyle: "black-translucent",
+  },
+  icons: {
+    icon: "/icons/icon-192.png",
+    apple: "/icons/icon-192.png",
+  },
 };
 
 export default async function RootLayout({
@@ -45,6 +57,7 @@ export default async function RootLayout({
     <html lang="fr" className={dancingScript.variable}>
       <body>
         <WebVitalsReporter />
+        <ServiceWorkerRegister />
           <header className="bg-slate-900 text-white p-4">
             <nav className="container mx-auto flex justify-between items-center gap-6">
               <div className="flex gap-6">
